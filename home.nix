@@ -5,7 +5,40 @@
   home.homeDirectory = "/home/max";
   home.stateVersion = "26.05";
 
-  programs.ghostty.enable = true;
+  
+  programs.ghostty = {
+    enable = true;
+    settings = {
+      "font-family" = "JetBrainsMono Nerd Font";
+      "font-size" = 14;
+      "theme" = "TokyoNight Night";
+      "background-blur" = true;
+      "background-opacity" = 0.5;
+      "window-padding-x" = 10;
+      "window-padding-y" = 10;
+      "window-decoration" = false;
+      "cursor-style" = "block";
+      "mouse-hide-while-typing" = true;
+      "confirm-close-surface" = false;
+      "scrollback-limit" = 50000000;
+    };
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 12;
+    };
+    themeFile = "tokyo_night_night";
+    settings = {
+      background_opacity = "0.85";
+      window_padding_width = 10;
+      confirm_os_window_close = 0;
+    };
+  };
+
+
   programs.rofi.enable = true;
 
   # Polkit-Agent: ohne den koennen GUI-Programme nicht
@@ -67,18 +100,18 @@
         font-size: 13px;
       }
       window#waybar {
-        background: rgba(30, 30, 46, 0.9);
-        color: #cdd6f4;
+        background: rgba(26, 27, 38, 0.85);
+        color: #a9b1d6;
       }
       #workspaces button {
         padding: 0 10px;
-        color: #6c7086;
+        color: #565f89;
         background: transparent;
         border: none;
       }
       #workspaces button.active {
-        color: #89b4fa;
-        border-bottom: 2px solid #89b4fa;
+        color: #7aa2f7;
+        border-bottom: 2px solid #7aa2f7;
       }
       #clock, #pulseaudio, #network, #tray {
         padding: 0 12px;

@@ -2,7 +2,7 @@
 -- Bearbeiten in ~/nix-config/hyprland.lua, danach nixos-rebuild switch.
 
 local mainMod  = "SUPER"
-local terminal = "ghostty"
+local terminal = "kitty"
 local menu     = "rofi -show drun"
 
 ------------------
@@ -64,12 +64,16 @@ hl.config({
         force_default_wallpaper = 0,
         disable_hyprland_logo   = true,
     },
-
     general = {
         gaps_in     = 5,
         gaps_out    = 10,
         border_size = 2,
         layout      = "dwindle",
+
+        col = {
+            active_border   = { colors = {"rgba(7aa2f7ee)", "rgba(bb9af7ee)"}, angle = 45 },
+            inactive_border = "rgba(414868aa)",
+        },
     },
     decoration = {
         rounding = 10,
@@ -77,6 +81,7 @@ hl.config({
     animations = {
         enabled = true,
     },
+
 })
 
 hl.env("XCURSOR_SIZE", "24")
