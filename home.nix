@@ -5,34 +5,15 @@
   home.homeDirectory = "/home/max";
   home.stateVersion = "26.05";
 
-  
-  programs.ghostty = {
-    enable = true;
-    settings = {
-      "font-family" = "JetBrainsMono Nerd Font";
-      "font-size" = 14;
-      "theme" = "TokyoNight Night";
-      "background-blur" = true;
-      "background-opacity" = 0.5;
-      "window-padding-x" = 10;
-      "window-padding-y" = 10;
-      "window-decoration" = false;
-      "cursor-style" = "block";
-      "mouse-hide-while-typing" = true;
-      "confirm-close-surface" = false;
-      "scrollback-limit" = 50000000;
-    };
-  };
-
   programs.kitty = {
     enable = true;
     font = {
       name = "JetBrainsMono Nerd Font";
-      size = 12;
+      size = 15;
     };
     themeFile = "tokyo_night_night";
     settings = {
-      background_opacity = "0.85";
+      background_opacity = "0.65";
       window_padding_width = 10;
       confirm_os_window_close = 0;
     };
@@ -54,9 +35,19 @@
   services.hyprpaper.enable = true;
   home.packages = [ pkgs.hyprpaper ];  
 
+  home.pointerCursor = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+    hyprcursor.enable = true;
+  };
+
   programs.waybar = {
     enable = true;
     systemd.enable = true;
+
 
     settings.main = {
       layer = "top";
