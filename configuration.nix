@@ -99,6 +99,21 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+# Bootloader-Eintraege begrenzen, damit /boot nicht volllaeuft.
+  boot.loader.systemd-boot.configurationLimit = 10;
+
+  # NVIDIA GTX 1650 (Turing). nouveau kann bei Turing nicht reclocken
+  # und verursacht Cursor-Flackern.
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
 
   # Flakes aktivieren
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -121,6 +136,7 @@
     pavucontrol
     networkmanagerapplet
     nautilus
+    pkgs.freshfetch
 
   ];
 

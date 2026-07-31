@@ -71,12 +71,23 @@ hl.config({
         layout      = "dwindle",
 
         col = {
-            active_border   = { colors = {"rgba(7aa2f7ee)", "rgba(bb9af7ee)"}, angle = 45 },
+	    active_border = { colors = {"rgba(d6d9e0ee)"}, angle = 0 },		
             inactive_border = "rgba(414868aa)",
         },
     },
     decoration = {
         rounding = 10,
+	blur = {
+            enabled           = true,
+            size              = 8,
+            passes            = 3,
+            new_optimizations = true,
+            ignore_opacity    = true,
+            xray              = false,
+            noise             = 0.0117,
+            contrast          = 0.9,
+            brightness        = 0.8,
+        },
     },
     animations = {
         enabled = true,
