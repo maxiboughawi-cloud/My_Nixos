@@ -115,11 +115,6 @@
     btop
     hypridle 
     hyprlock
-    waybar
-    mako
-    hyprpaper 
-    hyprpolkitagent
-    hyprshot
     wl-clipboard
     brightnessctl
     playerctl

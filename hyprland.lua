@@ -60,6 +60,11 @@ hl.config({
 ---- LOOK AND FEEL ----
 -----------------------
 hl.config({
+    misc = {
+        force_default_wallpaper = 0,
+        disable_hyprland_logo   = true,
+    },
+
     general = {
         gaps_in     = 5,
         gaps_out    = 10,
@@ -100,3 +105,12 @@ end
 -- Fenster mit Maus verschieben und skalieren
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+------------------
+---- WALLPAPER ----
+------------------
+-- hyprpaper wird per systemd gestartet, das Bild setzen wir hier,
+-- weil HMs Config-Generator noch das alte Format schreibt.
+hl.on("hyprland.start", function()
+    hl.exec_cmd("sleep 1 && hyprctl hyprpaper wallpaper ',/home/max/nix-config/wallpapers/wall.jpg'")
+end)
