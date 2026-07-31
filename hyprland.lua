@@ -17,6 +17,34 @@ hl.monitor({
     scale    = "auto",
 })
 
+-- Philips 27E2N2500, 1440p. Panel kann 120 Hz, meldet aber 60 als
+-- "preferred" -- deshalb explizit setzen.
+--hl.monitor({
+--    output   = "HDMI-A-1",
+--    mode     = "2560x1440@120",
+--    position = "0x0",
+--    scale    = 1,
+--
+--})
+
+-- Zweiter Philips (Kabel fehlt noch). Sobald angeschlossen:
+-- output-Namen mit `hyprctl monitors` pruefen, dann einkommentieren.
+-- position = "2560x0" setzt ihn rechts daneben.
+-- hl.monitor({
+--     output   = "DP-1",
+--     mode     = "2560x1440@120",
+--     position = "2560x0",
+--     scale    = 1,
+-- })
+
+-- Fallback fuer alles Unbekannte, damit ein neu angestecktes
+-- Display nicht schwarz bleibt.
+hl.monitor({
+    output   = "",
+    mode     = "preferred",
+    position = "auto",
+    scale    = "auto",
+})
 ---------------
 ---- INPUT ----
 ---------------
