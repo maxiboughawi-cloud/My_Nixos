@@ -136,5 +136,5 @@ hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0,   y = 40,  r
 -- weil HMs Config-Generator noch das alte Format schreibt.
 hl.on("hyprland.start", function()
     hl.exec_cmd("sleep 1 && hyprctl hyprpaper wallpaper 'HDMI-A-1,/home/max/nix-config/wallpapers/black.jpg'")
-    hl.exec_cmd("sleep 1 && hyprctl hyprpaper wallpaper 'DP-1,/home/max/nix-config/wallpapers/wall[<65;147;30M.jpg'")
+    hl.exec_cmd("sleep 2 && hyprctl hyprpaper wallpaper 'DP-1,/home/max/nix-config/wallpapers/wall.jpg'")
 end)
