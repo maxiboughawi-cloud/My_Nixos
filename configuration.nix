@@ -136,7 +136,9 @@
     pavucontrol
     networkmanagerapplet
     nautilus
-    pkgs.freshfetch
+    freshfetch
+    uv
+    python3
 
   ];
 
