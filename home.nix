@@ -24,6 +24,22 @@
     GIT_ASKPASS = "";
   };
 
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      nrs() {
+        cd ~/nix-config || return 1
+        nix-instantiate --parse home.nix > /dev/null || { echo "Syntax-Fehler in home.nix"; return 1; }
+        hyprland --verify-config -c ~/nix-config/hyprland.lua | grep -q "config ok" || { echo "Fehler in hyprland.lua"; return 1; }
+        git add -A
+        sudo nixos-rebuild switch --flake ~/nix-config#nixos || return 1
+        systemctl --user restart waybar
+        echo "Fertig."
+     }
+    '';
+  };
+  
+
 
   programs.rofi = {
     enable = true;
@@ -102,11 +118,16 @@
 
   # Benachrichtigungs-Daemon
   services.mako.enable = true;
+  
+  # Bluetooth 
+  services.blueman-applet.enable = true;
 
-  # hyprpaper 0.8.x hat das IPC- und Configformat geaendert,
-  # HMs settings-Generator schreibt noch das alte (preload=).
-  # Deshalb nur das Paket, Wallpaper wird aus hyprland.lua gesetzt.
-  home.packages = [ pkgs.swaybg ];
+
+  home.packages = with pkgs; [ swaybg blueman ]; 
+  
+
+
+
   home.pointerCursor = {
     name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;
@@ -120,41 +141,74 @@
     enable = true;
     systemd.enable = true;
 
+    settings = {
+      links = {
+        layer = "top";
+        position = "top";
+        height = 32;
+        output = [ "HDMI-A-1" ];
 
-    settings.main = {
-      layer = "top";
-      position = "top";
-      height = 32;
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "clock" ];
+        modules-right = [ "pulseaudio" ];
 
-      modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "clock" ];
-      modules-right = [ "pulseaudio" "network" "tray" ];
+        "hyprland/workspaces" = {
+          format = "{id}";
+          on-click = "activate";
+        };
 
-      "hyprland/workspaces" = {
-        format = "{id}";
-        on-click = "activate";
+        clock = {
+          format = "{:%H:%M}";
+          format-alt = "{:%A, %d. %B %Y}";
+          tooltip-format = "<tt>{calendar}</tt>";
+        };
+
+        pulseaudio = {
+          format = "VOL {volume}%";
+          format-muted = "stumm";
+          on-click = "pavucontrol";
+        };
       };
 
-      clock = {
-        format = "{:%H:%M}";
-        format-alt = "{:%A, %d. %B %Y}";
-        tooltip-format = "<tt>{calendar}</tt>";
-      };
+      rechts = {
+        layer = "top";
+        position = "top";
+        height = 32;
+        output = [ "DP-1" ];
 
-      pulseaudio = {
-        format = "VOL {volume}%";
-        format-muted = "stumm";
-        on-click = "pavucontrol";
-      };
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ ];
+        modules-right = [ "network" "bluetooth" "cpu" "memory" ];
 
-      network = {
-        format-wifi = "{essid}";
-        format-ethernet = "LAN";
-        format-disconnected = "offline";
-        on-click = "nm-connection-editor";
-      };
+        "hyprland/workspaces" = {
+          format = "{id}";
+          on-click = "activate";
+        };
 
-      tray.spacing = 8;
+        network = {
+          format-ethernet = "LAN";
+          format-wifi = "{essid}";
+          format-disconnected = "offline";
+          on-click = "nm-connection-editor";
+        };
+
+        bluetooth = {
+          format = "BT {status}";
+          format-connected = "BT {device_alias}";
+          format-disabled = "BT aus";
+          on-click = "blueman-manager";
+        };
+
+        cpu = {
+          format = "CPU {usage}%";
+          interval = 2;
+        };
+
+        memory = {
+          format = "RAM {percentage}%";
+          interval = 5;
+        };
+      };
     };
 
     style = ''
@@ -176,7 +230,7 @@
         color: #7aa2f7;
         border-bottom: 2px solid #7aa2f7;
       }
-      #clock, #pulseaudio, #network, #tray {
+      #clock, #pulseaudio, #network, #bluetooth, #cpu, #memory {
         padding: 0 12px;
       }
     '';
