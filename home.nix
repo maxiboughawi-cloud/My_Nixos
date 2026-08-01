@@ -106,9 +106,7 @@
   # hyprpaper 0.8.x hat das IPC- und Configformat geaendert,
   # HMs settings-Generator schreibt noch das alte (preload=).
   # Deshalb nur das Paket, Wallpaper wird aus hyprland.lua gesetzt.
-  services.hyprpaper.enable = true;
-  home.packages = [ pkgs.hyprpaper ];  
-
+  home.packages = [ pkgs.swaybg ];
   home.pointerCursor = {
     name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;

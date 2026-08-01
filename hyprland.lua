@@ -57,6 +57,7 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,
         disable_hyprland_logo   = true,
+	disable_splash_rendering = true,
     },
     general = {
         gaps_in     = 5,
@@ -132,9 +133,9 @@ hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0,   y = 40,  r
 ------------------
 ---- WALLPAPER ----
 ------------------
--- hyprpaper wird per systemd gestartet, das Bild setzen wir hier,
--- weil HMs Config-Generator noch das alte Format schreibt.
+-- swaybg statt hyprpaper: kein Splash-Text, kein IPC-Gebastel,
+-- pro Monitor ein eigener Prozess.
 hl.on("hyprland.start", function()
-    hl.exec_cmd("sleep 1 && hyprctl hyprpaper wallpaper 'HDMI-A-1,/home/max/nix-config/wallpapers/black.jpg'")
-    hl.exec_cmd("sleep 2 && hyprctl hyprpaper wallpaper 'DP-1,/home/max/nix-config/wallpapers/wall.jpg'")
+    hl.exec_cmd("swaybg -o HDMI-A-1 -i /home/max/nix-config/wallpapers/black.jpg -m fill")
+    hl.exec_cmd("swaybg -o DP-1 -i /home/max/nix-config/wallpapers/wall.jpg -m fill")
 end)
