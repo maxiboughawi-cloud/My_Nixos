@@ -123,8 +123,7 @@
   services.blueman-applet.enable = true;
 
 
-  home.packages = with pkgs; [ swaybg blueman ]; 
-  
+  home.packages = with pkgs; [ swaybg blueman grim slurp satty wl-clipboard jq ];
 
 
 

@@ -121,6 +121,11 @@ for i = 1, 9 do
     hl.bind(mainMod .. " + SHIFT + " .. i,   hl.dsp.window.move({ workspace = i }))
 end
 
+-- Fenster mit Maus verschieben und skalieren
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+
 -- Fenstergroesse mit mainMod + CTRL + Pfeiltasten
 local resizeOpts = { repeating = true }
 
@@ -128,6 +133,27 @@ hl.bind(mainMod .. " + CTRL + left",  hl.dsp.window.resize({ x = -40, y = 0,   r
 hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.resize({ x = 40,  y = 0,   relative = true }), resizeOpts)
 hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.resize({ x = 0,   y = -40, relative = true }), resizeOpts)
 hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0,   y = 40,  relative = true }), resizeOpts)
+
+
+
+-- Screenshots: grim schiesst, slurp waehlt aus, satty editiert.
+-- Bewusst nicht hyprshot -- grim/slurp sind die stabilen Referenztools.
+local screenshotDir = os.getenv("HOME") .. "/Pictures/Screenshots"
+
+-- Region auswaehlen, dann Editor zum Annotieren
+hl.bind("Print", hl.dsp.exec_cmd(
+    'grim -g "$(slurp)" - | satty --filename - '
+    .. '--output-filename ' .. screenshotDir .. '/$(date +%Y%m%d-%H%M%S).png '
+    .. '--early-exit --copy-command wl-copy'
+))
+
+-- Region direkt in die Zwischenablage, ohne Editor
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+
+-- Aktueller Monitor komplett in die Zwischenablage
+hl.bind("CTRL + Print", hl.dsp.exec_cmd(
+    'grim -o "$(hyprctl activeworkspace -j | jq -r .monitor)" - | wl-copy'
+))
 
 
 ------------------

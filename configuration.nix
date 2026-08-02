@@ -116,9 +116,16 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
+    powerManagement.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  # Der soll nicht aufwachen nur weil die Maus nerft...(wackelt) 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c548", ATTR{power/wakeup}="disabled"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
 
 
   # Flakes aktivieren
@@ -127,8 +134,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #    environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.  
+    vim
     wget
     git
     kitty
@@ -145,13 +151,15 @@
     freshfetch
     uv
     python3
-
+    vial 
+    usbutils
   ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
 
+  hardware.keyboard.qmk.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
