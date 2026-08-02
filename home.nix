@@ -117,8 +117,27 @@
   services.hyprpolkitagent.enable = true;
 
   # Benachrichtigungs-Daemon
-  services.mako.enable = true;
-  
+  services.mako = {
+    enable = true;
+    settings = {
+      font = "JetBrainsMono Nerd Font 11";
+      background-color = "#1a1b26e6";
+      text-color = "#a9b1d6";
+      border-color = "#7aa2f7";
+      border-size = 2;
+      border-radius = 10;
+      padding = "12";
+      margin = "10";
+      width = 350;
+      height = 120;
+      default-timeout = 5000;
+      anchor = "top-right";
+      layer = "overlay";
+      icons = true;
+      max-icon-size = 48;
+    };
+  };
+
   # Bluetooth 
   services.blueman-applet.enable = true;
 
@@ -128,6 +147,7 @@
 
 
   home.pointerCursor = {
+    enable = true;
     name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;
     size = 24;
