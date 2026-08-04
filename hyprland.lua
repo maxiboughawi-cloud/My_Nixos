@@ -135,6 +135,8 @@ hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.resize({ x = 0,   y = -40, r
 hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0,   y = 40,  relative = true }), resizeOpts)
 
 
+-- ausloggen
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 
 -- Screenshots: grim schiesst, slurp waehlt aus, satty editiert.
 -- Bewusst nicht hyprshot -- grim/slurp sind die stabilen Referenztools.

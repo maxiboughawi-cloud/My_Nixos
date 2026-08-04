@@ -20,6 +20,8 @@
     powerOnBoot = true;
   };
 
+
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -93,11 +95,13 @@
   users.users."max" = {
     isNormalUser = true;
     description = "max";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "sandbox"  ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
+
+
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -153,6 +157,8 @@
     python3
     vial 
     usbutils
+    acl
+    opencode
   ];
 
   fonts.packages = with pkgs; [
@@ -161,7 +167,24 @@
 
   hardware.keyboard.qmk.enable = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
+
+  users.groups.sandbox = { };
+
+  users.users.agent = {
+    isNormalUser = true;
+    uid = 1001;
+    home = "/home/agent";
+    extraGroups = [ "sandbox" ];
+  };
+
+
+
+  systemd.tmpfiles.rules = [
+    "d /srv/sandbox 2770 max sandbox - -"
+    "A+ /srv/sandbox - - - - g:sandbox:rwx,m::rwx,d:g:sandbox:rwx,d:m::rwx"
+  ];
+ 
+   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
